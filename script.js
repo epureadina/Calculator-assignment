@@ -109,9 +109,9 @@ function operate(x, y, operator) {
       return tangent(x, y);
     case "rad":
       return radians(x);
-    case "&#8730":
+    case "√":
       return radical(x, y);
-    case "pi":
+    case "π":
       return Pi(x);
   }
 }
@@ -121,6 +121,13 @@ function displayResult() {
     parseFloat(storedNumber),
     clickedOperator
   );
+  const stringNumber = result.toString();
+  const integerDigits = parseFloat(stringNumber.split(".")[0]);
+  const decimalDigits = stringNumber.split(".")[1];
+  console.log(integerDigits, decimalDigits);
+  if (decimalDigits === "00") {
+    result = integerDigits;
+  }
   currentOperand.textContent = result;
   previousOperand.textContent =
     firstNumber + " " + clickedOperator + " " + storedNumber;
@@ -142,15 +149,11 @@ operatorButton.forEach((operator) => {
     if (firstNumber && storedNumber) {
       displayResult();
     }
-    // save the first number
     firstNumber = storedNumber;
-    // get the operator that was clicked
     clickedOperator = operator.textContent;
     previousOperand.textContent = storedNumber + clickedOperator;
     storedNumber = "";
     currentOperand.textContent = "";
-    console.log("FirstNumber" + firstNumber + "Stored" + storedNumber);
-    console.log(clickedOperator);
   });
 });
 equalButton.addEventListener("click", function () {

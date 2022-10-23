@@ -4,11 +4,11 @@ body {
   font-family: sans-serif;
 }
 #calculator {
-  margin-top: 50px;
+  margin-top: 10px;
   display: grid;
   justify-content: center;
   grid-template-columns: repeat(6, 100px);
-  grid-template-rows: minmax(120px, auto) repeat(5, 100px);
+  grid-template-rows: minmax(50px, auto) repeat(6, 100px);
 }
 button {
   cursor: pointer;
