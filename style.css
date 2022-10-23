@@ -23,26 +23,27 @@ button:hover {
   opacity: 100%;
 }
 #equal {
-  grid-row: span 2;
-  border-radius: 20%;
+  grid-column: span 2;
+  border-radius: 45%;
 }
 .calculator-display {
   grid-column: 1/-1;
   background-color: black;
+  border: 5px solid rgb(85, 82, 82);
   color: white;
   opacity: 80%;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
   padding: 10px;
-  padding-top: 20px;
   border-radius: 5px;
+  margin-bottom: 10px;
 }
 .calculator-display .previous-operand {
   font-size: 1.5rem;
 }
 .calculator-display .current-operand {
-  font-size: 2.5rem;
+  font-size: 2rem;
   padding-top: 5px;
 }
 .orange{

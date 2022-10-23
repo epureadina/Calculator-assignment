@@ -16,6 +16,7 @@ let storedNumber = "";
 let clickedOperator = "";
 let firstNumber = "";
 let result = "";
+
 //Functions
 function add(x, y) {
   return (x + y).toFixed(2);
