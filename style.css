@@ -1,6 +1,6 @@
 body {
   margin: 0px;
-  background: linear-gradient(0.25turn, #c0a9ee, #ebf8e1, #ba2fb5);
+  background: black;
   font-family: sans-serif;
 }
 #calculator {
@@ -13,22 +13,23 @@ body {
 button {
   cursor: pointer;
   font-size: 2rem;
-  border: 1px solid #4289a7;
+  color: white;
   outline: none;
-  background-color: #f69d3c;
+  background-color: rgb(103, 100, 100);
   opacity: 80%;
-  border-radius: 5px;
+  border-radius: 50%;
 }
 button:hover {
   opacity: 100%;
 }
 #equal {
   grid-row: span 2;
+  border-radius: 20%;
 }
 .calculator-display {
   grid-column: 1/-1;
-  background-color: #efd7a5;
-  border: 1px solid #4289a7;
+  background-color: black;
+  color: white;
   opacity: 80%;
   display: flex;
   flex-direction: column;
@@ -43,4 +44,13 @@ button:hover {
 .calculator-display .current-operand {
   font-size: 2.5rem;
   padding-top: 5px;
+}
+.orange{
+background-color: rgb(255, 115, 0);
+}
+.gray{
+  background-color: rgb(209, 201, 201);
+}
+.black{
+  background-color: rgb(51, 51, 52);
 }
