@@ -1,4 +1,6 @@
 //Selectors
+const currentOperand = document.querySelector(".current-operand");
+const previousOperand = document.querySelector(".previous-operand");
 const numberButton = document.querySelectorAll(".number-btn");
 const decimalButton = document.querySelector(".decimal-btn");
 const operatorButton = document.querySelectorAll(".operator");
@@ -6,46 +8,68 @@ const clearButton = document.querySelector(".clear-btn");
 const deleteButton = document.querySelector(".delete-btn");
 const equalButton = document.querySelector(".equal-btn");
 const signButton = document.querySelector(".sign-btn");
-const currentOperand = document.querySelector(".current-operand");
-const previousOperand = document.querySelector(".previous-operand");
+const memoryResultButton = document.querySelector(".memory-result-btn");
+const memoryPlusButton = document.querySelector(".memory-plus-btn");
+const memoryMinusButton = document.querySelector(".memory-minus-btn");
+const memoryClearButton = document.querySelector(".memory-clear-btn");
+const memoryOperand = document.querySelector(".memory-operand");
 
 //Declaring variables
 currentOperand.textContent = "";
 previousOperand.textContent = "";
+memoryOperand.textContent = " ";
 let storedNumber = "";
 let clickedOperator = "";
 let firstNumber = "";
 let result = "";
+let memoryNumber1 = "";
+let memoryNumber = 0;
+let memoryNumber2 = 0;
+let memoryResult = 0;
 
 //Functions
 function add(x, y) {
-  return (x + y).toFixed(2);
+  return x + y;
 }
 function substract(x, y) {
-  return (x - y).toFixed(2);
+  return x - y;
 }
 function multiply(x, y) {
-  return (x * y).toFixed(2);
+  return x * y;
 }
 function divide(x, y) {
-  return y === 0 ? "Can't divide by 0!" : (x / y).toFixed(2);
+  return y === 0 ? "Can't divide by 0!" : x / y;
 }
 function percentage(x) {
   return x / 100;
 }
-function factorial(x) {
-  let y;
-  if (x === 0) {
-    y = 1;
-  } else if (x < 1) {
-    x = "undefined";
-  } else {
-    y = 1;
-    for (let i = x; i > 0; i--) {
-      y *= i;
+function factorial(x, y) {
+  let z;
+  if (!y) {
+    if (x === 0) {
+      z = 1;
+    } else if (x < 1) {
+      x = "undefined";
+    } else {
+      z = 1;
+      for (let i = x; i > 0; i--) {
+        z *= i;
+      }
     }
+    return z;
+  } else {
+    if (x === 0) {
+      z = 1;
+    } else if (x < 1) {
+      x = "undefined";
+    } else {
+      z = 1;
+      for (let i = x; i > 0; i--) {
+        z = z * i;
+      }
+    }
+    return z * y;
   }
-  return y.toFixed(2);
 }
 function exponent(x, y) {
   /* let z = 1;
@@ -61,25 +85,30 @@ function exponent(x, y) {
     }
   }
   return z;*/
-  return Math.pow(x, y).toFixed(2);
+  return Math.pow(x, y);
 }
 function naturalLogaritm(x, y) {
-  return Math.log(y).toFixed(2);
+  if (!x) return Math.log(y);
+  else return x * Math.log(y);
 }
 function cosinus(x, y) {
-  return Math.cos(y).toFixed(2);
+  if (!x) return Math.cos(y);
+  else return x * Math.cos(y);
 }
 function sinus(x, y) {
-  return Math.sin(y).toFixed(2);
+  if (!x) return Math.sin(y);
+  else return x * Math.sin(y);
 }
 function tangent(x, y) {
-  return Math.tan(y).toFixed(2);
+  if (!x) return Math.tan(y);
+  else return x * Math.tan(y);
 }
 function radians(x) {
-  return (x * (Math.PI / 180)).toFixed(2);
+  return x * (Math.PI / 180);
 }
 function radical(x, y) {
-  return Math.sqrt(y);
+  if (!x) return Math.sqrt(y);
+  else return x * Math.sqrt(y);
 }
 function Pi(x) {
   return x * Math.PI;
@@ -97,7 +126,7 @@ function operate(x, y, operator) {
     case "%":
       return percentage(x);
     case "!":
-      return factorial(x);
+      return factorial(x, y);
     case "^":
       return exponent(x, y);
     case "ln":
@@ -122,14 +151,14 @@ function displayResult() {
     parseFloat(storedNumber),
     clickedOperator
   );
-  const stringNumber = result.toString();
+  /*const stringNumber = result.toString();
   const integerDigits = parseFloat(stringNumber.split(".")[0]);
   const decimalDigits = stringNumber.split(".")[1];
   console.log(integerDigits, decimalDigits);
   if (decimalDigits === "00") {
     result = integerDigits;
-  }
-  currentOperand.textContent = result;
+  }*/
+  currentOperand.textContent = result.toString().substring(0, 20);
   previousOperand.textContent =
     firstNumber + " " + clickedOperator + " " + storedNumber;
   storedNumber = result;
@@ -137,11 +166,31 @@ function displayResult() {
   clickedOperator = "";
   result = "";
 }
+function displayMemoryResult() {
+  memoryResult = operate(
+    parseFloat(memoryNumber1),
+    parseFloat(memoryNumber2),
+    clickedOperator
+  );
+  console.log(memoryResult);
+  memoryOperand.textContent = memoryResult;
+  memoryNumber = memoryNumber1 + " " + clickedOperator + " " + memoryNumber2;
+  console.log(memoryNumber);
+  memoryNumber2 = memoryResult;
+  memoryNumber1 = "";
+  clickedOperator = "";
+  memoryResult = "";
+}
 
 //Event Listeners
+window.addEventListener("keydown", function (e) {
+  const key = document.querySelector(`button[data-key='${e.keyCode}']`);
+  key.click();
+});
 numberButton.forEach((number) => {
   number.addEventListener("click", function () {
     storedNumber += number.value;
+    storedNumber = storedNumber.substring(0, 10);
     currentOperand.textContent = storedNumber;
   });
 });
@@ -187,4 +236,35 @@ signButton.addEventListener("click", function () {
     storedNumber = "-" + storedNumber;
     currentOperand.textContent = storedNumber;
   }
+});
+/*memoryButton.forEach((memory) => {
+  memory.addEventListener("click", function () {
+    if (memoryNumber1 && memoryNumber2) {
+      displayMemoryResult();
+    }
+    memoryNumber1 = memoryNumber2;
+    clickedOperator = memory.textContent;
+    memoryOperand.textContent = memoryNumber1 + clickedOperator;
+    memoryNumber2 = "";
+  });
+});
+*/
+memoryPlusButton.addEventListener("click", function () {
+  memoryNumber1 = parseFloat(currentOperand.textContent);
+  memoryNumber2 += memoryNumber1;
+  memoryOperand.textContent = "M+" + " " + memoryNumber2;
+});
+memoryMinusButton.addEventListener("click", function () {
+  memoryNumber1 = parseFloat(currentOperand.textContent);
+  memoryNumber2 -= memoryNumber1;
+  memoryOperand.textContent = "M-" + " " + memoryNumber2;
+});
+memoryClearButton.addEventListener("click", function () {
+  memoryNumber1 = 0;
+  memoryNumber2 = 0;
+  memoryOperand.textContent = "";
+});
+memoryResultButton.addEventListener("click", function () {
+  currentOperand.textContent = memoryNumber2;
+  memoryOperand.textContent = "";
 });
