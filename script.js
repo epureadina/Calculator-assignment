@@ -44,7 +44,7 @@ function multiply(x, y) {
 }
 function divide(x, y) {
   if (y === 0) {
-    return "Can't divide by 0!";
+    return "Error";
   } else {
     if (!x) {
       x = 1;
