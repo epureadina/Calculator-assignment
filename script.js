@@ -161,7 +161,7 @@ function displayResult() {
   console.log(integerDigits);
   console.log(decimalDigits);
 */
-  currentOperand.textContent = result.toString().substring(0, 20);
+  currentOperand.textContent = result.toString().substring(0, 8);
   previousOperand.textContent =
     firstNumber + " " + clickedOperator + " " + storedNumber;
   storedNumber = result;
@@ -174,7 +174,7 @@ function displayResult() {
 numberButton.forEach((number) => {
   number.addEventListener("click", function () {
     storedNumber += number.value;
-    storedNumber = storedNumber.substring(0, 8);
+    storedNumber = storedNumber.substring(0, 4);
     currentOperand.textContent = storedNumber;
   });
 });
