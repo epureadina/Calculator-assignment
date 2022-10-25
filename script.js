@@ -2,6 +2,7 @@
 const currentOperand = document.querySelector(".current-operand");
 const previousOperand = document.querySelector(".previous-operand");
 const numberButton = document.querySelectorAll(".number-btn");
+const numberZeroButton = document.querySelector(".number-zero-btn");
 const decimalButton = document.querySelector(".decimal-btn");
 const operatorButton = document.querySelectorAll(".operator");
 const clearButton = document.querySelector(".clear-btn");
@@ -44,6 +45,7 @@ function multiply(x, y) {
 }
 function divide(x, y) {
   if (y === 0) {
+    alert("Can't devide by 0!");
     return "Error";
   } else {
     if (!x) {
@@ -155,13 +157,8 @@ function displayResult() {
     parseFloat(storedNumber),
     clickedOperator
   );
-  /*  const stringResultNumber = result.toString();
-  const integerDigits = parseFloat(stringResultNumber.split("."[0]));
-  const decimalDigits = stringResultNumber.split("."[1]);
-  console.log(integerDigits);
-  console.log(decimalDigits);
-*/
-  currentOperand.textContent = result.toString().substring(0, 8);
+  result = result.toString().substring(0, 8);
+  currentOperand.textContent = result;
   previousOperand.textContent =
     firstNumber + " " + clickedOperator + " " + storedNumber;
   storedNumber = result;
@@ -189,6 +186,12 @@ operatorButton.forEach((operator) => {
     storedNumber = "";
     currentOperand.textContent = "";
   });
+});
+numberZeroButton.addEventListener("click", function () {
+  if (!currentOperand.textContent.startsWith("0")) {
+    storedNumber += "0";
+    currentOperand.textContent = storedNumber;
+  }
 });
 equalButton.addEventListener("click", function () {
   displayResult();
