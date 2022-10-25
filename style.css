@@ -4,11 +4,11 @@ body {
   font-family: sans-serif;
 }
 #calculator {
-  margin-top: 100px;
+  margin-top: 50px;
   display: grid;
   justify-content: center;
   grid-template-columns: repeat(7, 100px);
-  grid-template-rows: minmax(100px, auto) repeat(6, 100px);
+  grid-template-rows: minmax(150px, auto) repeat(6, 100px);
 }
 button {
   cursor: pointer;
@@ -43,15 +43,16 @@ button:hover {
   border-radius: 5px;
   margin-bottom: 10px;
 }
-.calculator-display .memory-operand{
+.memory-operand{
+  font-size: 1rem;
   align-self: flex-start;
+margin-top: 10px;
 }
 .calculator-display .previous-operand {
-  font-size: 1rem;
+  font-size: 1.5rem;
 }
 .calculator-display .current-operand {
-  font-size: 2rem;
-  padding-top: 5px;
+  font-size: 2.5rem;
 }
 .orange {
   background-color: rgb(255, 115, 0);

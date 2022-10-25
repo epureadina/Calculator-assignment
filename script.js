@@ -22,26 +22,42 @@ let storedNumber = "";
 let clickedOperator = "";
 let firstNumber = "";
 let result = "";
-let memoryNumber1 = "";
-let memoryNumber = 0;
+let memoryNumber1 = 0;
 let memoryNumber2 = 0;
 let memoryResult = 0;
 
 //Functions
 function add(x, y) {
+  if (!x) x = 0;
+  if (!y) y = 0;
   return x + y;
 }
 function substract(x, y) {
+  if (!x) x = 0;
+  if (!y) y = 0;
   return x - y;
 }
 function multiply(x, y) {
+  if (!x) x = 1;
+  if (!y) y = 1;
   return x * y;
 }
 function divide(x, y) {
-  return y === 0 ? "Can't divide by 0!" : x / y;
+  if (y === 0) {
+    return "Can't divide by 0!";
+  } else {
+    if (!x) {
+      x = 1;
+      return x / y;
+    } else if (!y) {
+      y = 1;
+      return x / y;
+    } else if (y === 0);
+  }
 }
-function percentage(x) {
-  return x / 100;
+function percentage(x, y) {
+  if (!y) return x / 100;
+  if (y) return (x / 100) * y;
 }
 function factorial(x, y) {
   let z;
@@ -72,19 +88,6 @@ function factorial(x, y) {
   }
 }
 function exponent(x, y) {
-  /* let z = 1;
-  if (y === 0) {
-    z = 1;
-  } else if (y < 0) {
-    for (let i = y; i < 0; i++) {
-      z = z * (1 / x);
-    }
-  } else {
-    for (let i = y; i > 0; i--) {
-      z = z * x;
-    }
-  }
-  return z;*/
   return Math.pow(x, y);
 }
 function naturalLogaritm(x, y) {
@@ -124,7 +127,7 @@ function operate(x, y, operator) {
     case "/":
       return divide(x, y);
     case "%":
-      return percentage(x);
+      return percentage(x, y);
     case "!":
       return factorial(x, y);
     case "^":
@@ -151,13 +154,12 @@ function displayResult() {
     parseFloat(storedNumber),
     clickedOperator
   );
-  /*const stringNumber = result.toString();
-  const integerDigits = parseFloat(stringNumber.split(".")[0]);
-  const decimalDigits = stringNumber.split(".")[1];
-  console.log(integerDigits, decimalDigits);
-  if (decimalDigits === "00") {
-    result = integerDigits;
-  }*/
+  /*  const stringResultNumber = result.toString();
+  const integerDigits = parseFloat(stringResultNumber.split("."[0]));
+  const decimalDigits = stringResultNumber.split("."[1]);
+  console.log(integerDigits);
+  console.log(decimalDigits);
+*/
   currentOperand.textContent = result.toString().substring(0, 20);
   previousOperand.textContent =
     firstNumber + " " + clickedOperator + " " + storedNumber;
@@ -166,31 +168,12 @@ function displayResult() {
   clickedOperator = "";
   result = "";
 }
-function displayMemoryResult() {
-  memoryResult = operate(
-    parseFloat(memoryNumber1),
-    parseFloat(memoryNumber2),
-    clickedOperator
-  );
-  console.log(memoryResult);
-  memoryOperand.textContent = memoryResult;
-  memoryNumber = memoryNumber1 + " " + clickedOperator + " " + memoryNumber2;
-  console.log(memoryNumber);
-  memoryNumber2 = memoryResult;
-  memoryNumber1 = "";
-  clickedOperator = "";
-  memoryResult = "";
-}
 
 //Event Listeners
-window.addEventListener("keydown", function (e) {
-  const key = document.querySelector(`button[data-key='${e.keyCode}']`);
-  key.click();
-});
 numberButton.forEach((number) => {
   number.addEventListener("click", function () {
     storedNumber += number.value;
-    storedNumber = storedNumber.substring(0, 10);
+    storedNumber = storedNumber.substring(0, 8);
     currentOperand.textContent = storedNumber;
   });
 });
@@ -237,18 +220,6 @@ signButton.addEventListener("click", function () {
     currentOperand.textContent = storedNumber;
   }
 });
-/*memoryButton.forEach((memory) => {
-  memory.addEventListener("click", function () {
-    if (memoryNumber1 && memoryNumber2) {
-      displayMemoryResult();
-    }
-    memoryNumber1 = memoryNumber2;
-    clickedOperator = memory.textContent;
-    memoryOperand.textContent = memoryNumber1 + clickedOperator;
-    memoryNumber2 = "";
-  });
-});
-*/
 memoryPlusButton.addEventListener("click", function () {
   memoryNumber1 = parseFloat(currentOperand.textContent);
   memoryNumber2 += memoryNumber1;
@@ -267,4 +238,9 @@ memoryClearButton.addEventListener("click", function () {
 memoryResultButton.addEventListener("click", function () {
   currentOperand.textContent = memoryNumber2;
   memoryOperand.textContent = "";
+  previousOperand.textContent = "";
+});
+window.addEventListener("keydown", function (e) {
+  const key = document.querySelector(`button[data-key='${e.keyCode}']`);
+  key.click();
 });
