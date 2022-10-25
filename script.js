@@ -53,6 +53,7 @@ function divide(x, y) {
       y = 1;
       return x / y;
     } else if (y === 0);
+    else return x / y;
   }
 }
 function percentage(x, y) {
